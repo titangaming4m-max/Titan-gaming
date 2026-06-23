@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Custom 3D, High-Fidelity & Premium Obsidian/Amethyst Colors */
+  --color-cosmic-950: #06050b;       /* Darkest Luxury Amethyst Black */
+  --color-cosmic-900: #0d0b1a;       /* Deep Obsidian Amethyst */
+  --color-cosmic-800: #16132b;       /* Mid Obsidian Violet Table/Forms */
+  --color-cosmic-700: #252046;       /* Card Glass Borders */
+  --color-cyber-pink: #ec4899;       /* Vivid Aurora Magenta */
+  --color-cyber-blue: #10b981;       /* Brilliant High-Tech Emerald Mint */
+  --color-cyber-purple: #6366f1;     /* Majestic Electric Royal Indigo */
+}
+
+/* Custom 3D Transform Utilities & Interactive Animations */
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}
+
+/* High Fidelity Premium Frosted Glassmorphism Styles */
+.glass-card-premium {
+  background: rgba(18, 15, 35, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-card-premium-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-premium-hover:hover {
+  transform: translateY(-4px);
+  background: rgba(22, 19, 43, 0.6);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 16px 40px 0 rgba(99, 102, 241, 0.15),
+              0 0 20px 0 rgba(16, 185, 129, 0.08),
+              inset 0 1px 2px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-input-premium {
+  background: rgba(8, 7, 14, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-input-premium:focus {
+  background: rgba(8, 7, 14, 0.85);
+  border-color: rgba(99, 102, 241, 0.8);
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.8),
+              0 0 20px 0 rgba(99, 102, 241, 0.2);
+}
+
+/* Elegant 3D Card Hover & Halo Glow States */
+.card-3d-interactive {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.card-3d-interactive:hover {
+  transform: translateY(-8px) rotateX(4deg) rotateY(-4deg);
+  box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.3), 
+              0 0 15px -3px rgba(16, 185, 129, 0.25);
+}
+
+/* Gorgeous Aurora Gradient Backdrop with high-fidelity grid system */
+.cosmic-gradient-bg {
+  background-color: #06050b;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.18) 0%, rgba(6, 5, 11, 0) 65%),
+    radial-gradient(circle at 80% 50%, rgba(236, 72, 153, 0.07) 0%, rgba(6, 5, 11, 0) 50%),
+    radial-gradient(circle at 15% 90%, rgba(16, 185, 129, 0.09) 0%, rgba(6, 5, 11, 0) 50%),
+    radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
+}
+
+.hologram-glow {
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.15),
+              inset 0 0 15px rgba(99, 102, 241, 0.1);
+}
+
+.text-gradient-purple-blue {
+  background: linear-gradient(135deg, #ec4899 0%, #6366f1 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-neon {
+  background: linear-gradient(135deg, #10b981 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Scrollbar for immersive tech flow */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #06050b;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid #06050b;
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}

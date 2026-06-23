@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "RedeemCode": {
+      "title": "Redeem Code",
+      "description": "A promotional redeem code that users can copy",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Title of the item or campaign" },
+        "code": { "type": "string", "description": "The actual promo code to copy" },
+        "description": { "type": "string", "description": "Explanation of the code's rewards" },
+        "expiryDate": { "type": "string", "description": "Optional ISO date or plain-text expiration" },
+        "createdAt": { "type": "string", "description": "Timestamp of creation" },
+        "active": { "type": "boolean", "description": "Whether the code is active" }
+      },
+      "required": ["title", "code", "description"]
+    },
+    "Setting": {
+      "title": "YouTube Config Settings",
+      "description": "Global Settings for the YouTube feed",
+      "type": "object",
+      "properties": {
+        "channelId": { "type": "string", "description": "YouTube Channel ID to fetch video content from" },
+        "apiKey": { "type": "string", "description": "Optional custom YouTube Data API Key" },
+        "fallbackChannelName": { "type": "string", "description": "The name of the channel for UI fallback display" }
+      },
+      "required": ["channelId"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Dynamic user profile details, saved videos, and redeemed code tracking",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "description": "Registered email address" },
+        "createdAt": { "type": "string", "description": "Creation ISO timestamp" },
+        "favoriteVideoIds": {
+          "type": "array",
+          "description": "Dynamic list of favorited YouTube video IDs"
+        },
+        "redeemedCodeIds": {
+          "type": "array",
+          "description": "Dynamic list of successfully claimed gift voucher codes"
+        }
+      },
+      "required": ["email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "redeemCodes/{codeId}": {
+      "schema": "RedeemCode",
+      "description": "Promotion and reward codes"
+    },
+    "settings/youtube": {
+      "schema": "Setting",
+      "description": "Channel ID and developer settings"
+    },
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Registered member accounts"
+    }
+  }
+}

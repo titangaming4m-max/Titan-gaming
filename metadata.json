@@ -1,0 +1,6 @@
+{
+  "name": "YouTube Channel Companion",
+  "description": "A modern web dashboard to fetch, display, and watch YouTube channel videos, with a dynamic redeem code distribution panel and interactive admin suite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

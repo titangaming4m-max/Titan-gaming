@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Utility helpers
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    function isValidRedeemCode(data) {
+      return data.keys().hasAll(['title', 'code', 'description'])
+        && data.title is string && data.title.size() <= 256
+        && data.code is string && data.code.size() <= 64
+        && data.description is string && data.description.size() <= 1024;
+    }
+
+    function isValidSetting(data) {
+      return data.keys().hasAll(['channelId'])
+        && data.channelId is string && data.channelId.size() <= 128;
+    }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['email', 'createdAt'])
+        && data.email is string && data.email.size() <= 256
+        && data.createdAt is string && data.createdAt.size() <= 128;
+    }
+
+    // Rules for Redeem Codes
+    match /redeemCodes/{codeId} {
+      allow read: if true;
+      allow create: if isValidId(codeId) && isValidRedeemCode(request.resource.data);
+      allow update: if isValidId(codeId) && isValidRedeemCode(request.resource.data);
+      allow delete: if true;
+    }
+
+    // Rules for YouTube settings
+    match /settings/youtube {
+      allow read: if true;
+      allow write: if isValidSetting(request.resource.data);
+    }
+
+    // Rules for User Profiles
+    match /users/{userId} {
+      allow read: if isAuthenticated() && userId == request.auth.uid && isValidId(userId);
+      allow create: if isAuthenticated() && userId == request.auth.uid && isValidId(userId) && isValidUserProfile(request.resource.data);
+      allow update: if isAuthenticated() && userId == request.auth.uid && isValidId(userId) && isValidUserProfile(request.resource.data);
+      allow delete: if isAuthenticated() && userId == request.auth.uid && userId == request.auth.uid;
+    }
+  }
+}
