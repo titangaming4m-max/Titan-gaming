@@ -25,8 +25,21 @@ export interface YoutubeVideo {
   viewCount?: string;
 }
 
+export interface YouTubeChannelConfig {
+  id: string;
+  channelId: string;
+  apiKey?: string;
+  name?: string;
+}
+
 export interface AdminSettings {
   channelId: string;
   apiKey?: string;
   fallbackChannelName?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
+  backgroundColor?: string;
+  siteTitle?: string;
+  channels?: YouTubeChannelConfig[];
 }
