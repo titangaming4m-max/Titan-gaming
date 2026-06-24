@@ -60,8 +60,8 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }: AuthModalP
       console.error("Auth process failed:", err);
       
       // If the email provider is disabled in Firebase console, seamlessly fallback to local sandbox mode
-      if (err.code === "auth/operation-not-allowed") {
-        setSuccess("Email auth is currently disabled in console config. Transitioning seamlessly to High-Fidelity Local bypass session...");
+      if (err.code === "auth/operation-not-allowed" || err.message?.includes("operation-not-allowed")) {
+        setSuccess("Email/Password Auth is disabled in your Firebase console. Transitioning seamlessly to High-Fidelity Local bypass session so you can continue testing...");
         setTimeout(() => {
           const targetEmail = email.trim() || "demo-member@titan-gaming.com";
           localStorage.setItem("temp_member", targetEmail);
