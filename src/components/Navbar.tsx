@@ -112,18 +112,6 @@ export default function Navbar({
                   <User className="h-3.5 w-3.5 fill-current" />
                   <span>Sign In</span>
                 </button>
-                <button
-                  id="nav-btn-admin-login"
-                  onClick={() => setCurrentTab("admin")}
-                  className={`flex items-center space-x-1.5 rounded-xl border px-2.5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
-                    currentTab === "admin"
-                      ? "border-cyber-blue bg-cyber-blue/10 text-white shadow-[0_0_15px_rgba(16,185,129,0.2)]"
-                      : "border-white/5 bg-white/5 text-gray-400 hover:border-white/10 hover:text-white"
-                  }`}
-                >
-                  <Lock className="h-3 w-3" />
-                  <span>Admin</span>
-                </button>
               </div>
             )}
           </div>
@@ -203,30 +191,16 @@ export default function Navbar({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="w-full">
               <button
                 onClick={() => {
                   onOpenAuth();
                   setMobileMenuOpen(false);
                 }}
-                className="flex w-full items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-cyber-purple via-cyber-pink to-cyber-blue px-3 py-2.5 text-xs font-bold text-white shadow-lg focus:outline-none cursor-pointer"
+                className="flex w-full items-center justify-center space-x-2 rounded-xl bg-gradient-to-r from-cyber-purple via-cyber-pink to-cyber-blue px-4 py-3 text-xs font-bold text-white shadow-lg focus:outline-none cursor-pointer"
               >
                 <User className="h-4 w-4" />
-                <span>SIGN IN</span>
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentTab("admin");
-                  setMobileMenuOpen(false);
-                }}
-                className={`flex w-full items-center justify-center space-x-2 rounded-xl px-3 py-2.5 text-xs font-semibold border focus:outline-none cursor-pointer ${
-                  currentTab === "admin"
-                    ? "border-cyber-blue bg-cyber-blue/15 text-cyber-blue"
-                    : "border-white/5 bg-white/5 text-gray-400"
-                }`}
-              >
-                <Lock className="h-4 w-4" />
-                <span>ADMIN LOGIN</span>
+                <span>SIGN IN TO MEMBER ACCESS</span>
               </button>
             </div>
           )}
