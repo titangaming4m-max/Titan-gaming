@@ -34,11 +34,70 @@ export default function App() {
   const [channelSettings, setChannelSettings] = useState<AdminSettings>({
     channelId: "UCUIIdsKfR-Gn5_2rKzfzznQ", // Fallback Default channel (Requested)
     apiKey: "AIzaSyBEoAxxQb2UjyNVSJB8JMWuXhxftiOPGJ0",
-    fallbackChannelName: "Connected Channel"
+    fallbackChannelName: "Connected Channel",
+    primaryColor: "#ec4899",
+    secondaryColor: "#10b981",
+    accentColor: "#6366f1",
+    backgroundColor: "#06050b",
+    siteTitle: "Titan Gaming 1M",
+    channels: [
+      {
+        id: "default-1",
+        channelId: "UCUIIdsKfR-Gn5_2rKzfzznQ",
+        apiKey: "AIzaSyBEoAxxQb2UjyNVSJB8JMWuXhxftiOPGJ0",
+        name: "Titan Gaming 1M"
+      }
+    ]
   });
 
   // Display channel name
   const [channelName, setChannelName] = useState<string>("Connected Channel");
+
+  // Helper to convert hex to RGB string for radial-gradients
+  const hexToRgb = (hex: string): string => {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    const fullHex = hex.replace(shorthandRegex, (_, r, g, b) => r + r + g + g + b + b);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(fullHex);
+    return result 
+      ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+      : "255, 255, 255";
+  };
+
+  // Dynamically apply site theme colors
+  useEffect(() => {
+    const root = document.documentElement;
+    const primary = channelSettings.primaryColor || "#ec4899";
+    const secondary = channelSettings.secondaryColor || "#10b981";
+    const accent = channelSettings.accentColor || "#6366f1";
+    const bg = channelSettings.backgroundColor || "#06050b";
+
+    // Set standard variables
+    root.style.setProperty("--site-pink", primary);
+    root.style.setProperty("--site-blue", secondary);
+    root.style.setProperty("--site-purple", accent);
+    root.style.setProperty("--site-bg", bg);
+
+    // Set RGB components for gradients
+    root.style.setProperty("--site-pink-rgb", hexToRgb(primary));
+    root.style.setProperty("--site-blue-rgb", hexToRgb(secondary));
+    root.style.setProperty("--site-purple-rgb", hexToRgb(accent));
+    root.style.setProperty("--site-bg-rgb", hexToRgb(bg));
+
+    // Define lighter variants dynamically using color-mix
+    root.style.setProperty("--site-bg-900", `color-mix(in srgb, ${bg} 95%, white 5%)`);
+    root.style.setProperty("--site-bg-800", `color-mix(in srgb, ${bg} 88%, white 12%)`);
+    root.style.setProperty("--site-bg-700", `color-mix(in srgb, ${bg} 75%, white 25%)`);
+
+    root.style.setProperty("--color-cyber-pink", primary);
+    root.style.setProperty("--color-cyber-blue", secondary);
+    root.style.setProperty("--color-cyber-purple", accent);
+    root.style.setProperty("--color-cosmic-950", bg);
+    root.style.setProperty("--color-cosmic-900", `color-mix(in srgb, ${bg} 95%, white 5%)`);
+
+    if (channelSettings.siteTitle) {
+      document.title = channelSettings.siteTitle;
+    }
+  }, [channelSettings]);
 
   // Sync session and configuration
   useEffect(() => {
@@ -91,10 +150,29 @@ export default function App() {
     const unsubscribeSettings = onSnapshot(settingsDocRef, (snap) => {
       if (snap.exists()) {
         const data = snap.data();
+        const mainId = data.channelId || "UCUIIdsKfR-Gn5_2rKzfzznQ";
+        const mainKey = data.apiKey || "AIzaSyBEoAxxQb2UjyNVSJB8JMWuXhxftiOPGJ0";
+        const mainName = data.siteTitle || "Titan Gaming 1M";
+        
+        const fallbackChannels = [
+          {
+            id: "default-1",
+            channelId: mainId,
+            apiKey: mainKey,
+            name: mainName
+          }
+        ];
+
         setChannelSettings({
-          channelId: data.channelId || "UCUIIdsKfR-Gn5_2rKzfzznQ",
-          apiKey: data.apiKey || "AIzaSyBEoAxxQb2UjyNVSJB8JMWuXhxftiOPGJ0",
-          fallbackChannelName: data.fallbackChannelName || "Connected Channel"
+          channelId: mainId,
+          apiKey: mainKey,
+          fallbackChannelName: data.fallbackChannelName || "Connected Channel",
+          primaryColor: data.primaryColor || "#ec4899",
+          secondaryColor: data.secondaryColor || "#10b981",
+          accentColor: data.accentColor || "#6366f1",
+          backgroundColor: data.backgroundColor || "#06050b",
+          siteTitle: data.siteTitle || "Titan Gaming 1M",
+          channels: data.channels || fallbackChannels
         });
       }
     }, (error) => {
@@ -333,7 +411,16 @@ export default function App() {
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
               <span className="text-gray-400">Secure Live Node</span>
             </span>
-            <span className="text-cyber-blue uppercase tracking-widest">Titan Client v2.0.0</span>
+            <button
+              onClick={() => {
+                setCurrentTab("admin");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="text-cyber-blue/60 hover:text-cyber-blue transition-colors duration-200 uppercase tracking-widest cursor-pointer border-none bg-transparent p-0 text-[10px] focus:outline-none"
+              title="Administrative Panel Login"
+            >
+              Titan Client v2.0.0
+            </button>
           </div>
         </div>
       </footer>
