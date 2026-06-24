@@ -21,7 +21,8 @@
       "properties": {
         "channelId": { "type": "string", "description": "YouTube Channel ID to fetch video content from" },
         "apiKey": { "type": "string", "description": "Optional custom YouTube Data API Key" },
-        "fallbackChannelName": { "type": "string", "description": "The name of the channel for UI fallback display" }
+        "fallbackChannelName": { "type": "string", "description": "The name of the channel for UI fallback display" },
+        "channels": { "type": "array", "description": "List of up to 5 YouTube channels to switch between" }
       },
       "required": ["channelId"]
     },
